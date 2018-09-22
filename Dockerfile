@@ -1,4 +1,4 @@
-# Dockerfile for the pararius scrape app
+# Dockerfile for the multivariate statistics practical
 FROM rocker/rstudio
 
 MAINTAINER Jasper Ginn "jasperginn@gmail.com"
@@ -21,7 +21,7 @@ RUN R -e "install.packages('devtools', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('caret', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('e1071', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('ggplot2', repos='https://cloud.r-project.org/')"
-RUN R -e "install.packages('glmnet', repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages('nnet', repos='https://cloud.r-project.org/')"
 RUN R -e "devtools::install_github('JasperHG90/mnlr')"
 
 # Copy application
