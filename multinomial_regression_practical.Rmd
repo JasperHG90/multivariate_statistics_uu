@@ -88,9 +88,7 @@ ggplot(prcdata, aes(x=component1, y=component2, color=species)) +
 ```{r}
 library(rattle.data)
 library(nnet)
-library(glmnet)
 data("wine")
-data()
 ## Run a model
 multimodel <- multinom(Type ~ Alcohol + Alcalinity + Hue + Color + Flavanoids, data=wine,
                        Hess = TRUE,
