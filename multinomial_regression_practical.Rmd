@@ -1,7 +1,7 @@
 ---
 title: "Multinomial Logistic Regression Practical"
-output: 
-  html_notebook: 
+output:
+  html_notebook:
     highlight: tango
     theme: flatly
 ---
@@ -119,7 +119,7 @@ library(mnlr)
 mclr <- mlogistic(iris[,1:4], iris[, 5])
 # View probabilities
 probs <- as.data.frame(mclr$probabilities)
-knitr::kable(head(probs))
+head(probs)
 ```
 
 Lets see what the probabilities look like for each class
