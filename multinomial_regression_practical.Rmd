@@ -85,11 +85,69 @@ ggplot(prcdata, aes(x=component1, y=component2, color=species)) +
 
 ## Part II: Multinomial logistic regression & making inferences
 
+```{r}
+library(rattle.data)
+library(nnet)
+library(glmnet)
+data("wine")
+data()
+## Run a model
+multimodel <- multinom(Type ~ Alcohol + Alcalinity + Hue + Color + Flavanoids, data=wine,
+                       Hess = TRUE,
+                       model = TRUE)
+## View the summary of the model
+summary(multimodel)
+```
 
+**Q. How should we interpret the model? What is missing from the output?**
+
+In the multinomial logistic regression output, we compare the coefficients, standard errors, p-values etc. with reference to a 'base category' (much like we do with dummy variables > 2 categories). 
+
+So, for this model, we have:
+
+$$
+\ln\left(\frac{P(type = 2)}{P(type = 1)}\right) = \beta_0 + \beta_1(Alcohol) + \beta_2(Alcalinity) + \beta_3(Hue) + \beta_4(Color) + \beta_5(Flavanoids) + \epsilon \\
+\\
+\ln\left(\frac{P(type = 3)}{P(type = 1)}\right) = \beta_0 + \beta_1(Alcohol) + \beta_2(Alcalinity) + \beta_3(Hue) + \beta_4(Color) + \beta_5(Flavanoids) + \epsilon 
+$$
+
+Interpreting the odds ratios is the same as with binary logistic regression
+
+```{r}
+exp(coef(multimodel))
+```
+
+**Q. How should you interpret the coefficients? What are the most important predictors in the model?**
+
+**Q. Do you notice anything odd?**
+
+The output does not give us p-values, but we can perform a trick to get them
+
+```{r}
+zvals <- summary(multimodel)$coefficients / summary(multimodel)$standard.errors
+pnorm(abs(zvals), lower.tail=FALSE)*2
+```
+
+**Q. Interpret the statistical significance of the coefficients. How should we do this?**
+
+```{r}
+## Get the model confusion table
+pred <- predict(multimodel, wine[,c(2,5,12,11,8)])
+caret::confusionMatrix(pred, wine[,1])
+```
+
+For model fit, we'll examine McFadden's pseudo $R^2$ 
+
+```{r}
+# Deviance of the model v. deviance of null model
+deviance(multimodel) / deviance(update(multimodel, . ~ 1, trace=FALSE))
+```
+
+**Q. How do you interpret the model fit? Are there any caveats?**
 
 ## Part III: Multinomial logistic regression for classification
 
-We will be using a 'naive' model:
+We will be using a 'naive' model on the `iris` dataset we used above:
 
   - model all three classes separately (as binaries). So we are running K models for K classes.
   - we then compare the probabilities for each model and choose the 'most likely' one
@@ -103,7 +161,7 @@ knitr::include_graphics("img/model.png")
 
 **Q. What do we want from the classifier? i.e. what are we trying to optimize**
 
-The outcomes should look 'likely' given the data. So a point that is classified as class 1 but has a low probability of being selected as such gets penalized by the log-likelihood. As an aside, the use of the log function is a computational choice: by the rules of logarithms, products can be summed instead of multiplied when we take the log.
+The outcomes should look 'likely' given the data. So a point that has the label $1$ but has a low probability of being selected as such gets penalized by the log-likelihood. As an aside, the use of the log function is a computational choice: by the rules of logarithms, products can be summed instead of multiplied when we take the log.
 
 Now we perform multi-class classification. First, think about what a 'naive' model would do given K classes? Would it:
 
