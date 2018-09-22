@@ -22,8 +22,10 @@ RUN R -e "install.packages('caret', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('e1071', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('ggplot2', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('nnet', repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages('knitr', repos='https://cloud.r-project.org/')"
 RUN R -e "devtools::install_github('JasperHG90/mnlr')"
 
 # Copy application
 RUN mkdir /home/rstudio/practical
-COPY logistic_regression_fun.R /home/rstudio/practical
+COPY multinomial_regression_practical.Rmd /home/rstudio/practical
+COPY img /home/rstudio/practical/img

@@ -56,6 +56,22 @@ ggplot(prcdata, aes(x=component1, y=component2, color=species)) +
 
 # PART II: Multinomial logistic regression & making inferences ----
 
+library(nnet)
+multimodel <- multinom(Species ~ ., data=iris,
+                       Hess = TRUE,
+                       model = TRUE)
+
+## View the summary of the model
+summary(multimodel)
+
+## Q. How should we interpret the model?
+## What is missing?
+hessian <- multimodel$n
+
+## Get the model confusion table
+pred <- predict(multimodel, iris[,1:4])
+caret::confusionMatrix(pred, iris[,5])
+
 # PART III: Multinomial logistic regression for prediction -----
 
 # Q. What is the research question?
