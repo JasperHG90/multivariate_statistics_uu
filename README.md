@@ -6,7 +6,7 @@ Build the Dockerfile using
 docker build . -t jhginn/practical_mvsuu
 ```
 
-run with 
+run with  
 
 ```shell
 docker run -e PASSWORD=stats -p 8787:8787 jhginn/practical_mvsuu
