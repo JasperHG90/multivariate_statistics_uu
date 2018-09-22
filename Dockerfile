@@ -27,6 +27,7 @@ RUN R -e "install.packages('rmarkdown', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('caTools', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('bitops', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('rprojroot', repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages('rattle.data', repos='https://cloud.r-project.org/')"
 RUN R -e "devtools::install_github('JasperHG90/mnlr')"
 
 # Copy application
