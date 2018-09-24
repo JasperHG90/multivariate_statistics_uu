@@ -159,6 +159,10 @@ knitr::include_graphics("img/model.png")
 
 **Q. What do we want from the classifier? i.e. what are we trying to optimize**
 
+```{r}
+knitr::include_graphics("img/classtable.png") # FROM: https://en.wikipedia.org/wiki/Sensitivity_and_specificity
+```
+
 The outcomes should look 'likely' given the data. So a point that has the label $1$ but has a low probability of being selected as such gets penalized by the log-likelihood. As an aside, the use of the log function is a computational choice: by the rules of logarithms, products can be summed instead of multiplied when we take the log.
 
 Now we perform multi-class classification. First, think about what a 'naive' model would do given K classes? Would it:
@@ -205,6 +209,8 @@ caret::confusionMatrix(as.factor(pred_classes), iris[,5])
 **Q. What does the confusion matrix tell us?**
 
 **Q. Based on the above plots, would you say this is a good result?**
+
+**Q. How do we know this model will work well for future data?**
 
 ### Cross validation
 
@@ -281,7 +287,7 @@ $$
 \mathcal{L}(\hat{y}, y) = y \log(\hat{y}) + (1-y) \log(1-\hat{y}) \\
 $$
 
-through successive iterations, much like the Newton-Rhapson algorithm. We, ddd a penalty term to likelihood so we don't overfit! By increasing the regularization parameter $\lambda$, we 'increase' the minimum cost.
+through successive iterations, much like the Newton-Rhapson algorithm. We, add a penalty term to likelihood so we don't overfit! By increasing the regularization parameter $\lambda$, we 'increase' the minimum cost.
 
 ```{r, echo=FALSE}
 # Create some ys
