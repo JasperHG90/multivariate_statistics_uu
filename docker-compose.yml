@@ -1,0 +1,116 @@
+# Docker-compose file
+# Host multiple rstudio instances and load-balance using nginx
+
+version: '2'
+services:
+  ## Define endpoints
+  # First endpoint
+  practical1:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 2
+  practical2:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 3
+  practical3:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 4
+  practical4:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 5
+  practical5:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 6
+  practical6:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 7
+  practical7:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 8
+  practical8:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 9
+  practical9:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 10
+  jerry:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  ## Load balancer
+  nginx:
+    image: nginx:1.9
+    ports:
+     - "80:80"
+    volumes:
+     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: always
+    depends_on:
+     - practical1
+     - practical2
+     - practical3
+     - practical4
+     - practical5
+     - practical6
+     - practical7
+     - practical8
+     - practical9
+     - jerry
+    links:
+     - practical1
+     - practical2
+     - practical3
+     - practical4
+     - practical5
+     - practical6
+     - practical7
+     - practical8
+     - practical9
+     - jerry
