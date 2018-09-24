@@ -280,14 +280,28 @@ caret::confusionMatrix(as.factor(preds_dev$class), iris_dev[, 5])
 
 ### Regularization
 
-The algorithm for logistic regression tries to minimize the *log-likelihood* function
+The algorithm for logistic regression tries to minimize a *cost function*
 
 $$
 \tag{1}
+\mathcal{J}(w,b) = -\frac{1}{m} \sum_{i=0}^n \mathcal{L}(\hat{y}, y) 
+$$
+
+Where the log-likelihood $\mathcal{L}$ is given by
+
+$$
+\tag{2}
 \mathcal{L}(\hat{y}, y) = y \log(\hat{y}) + (1-y) \log(1-\hat{y}) \\
 $$
 
-through successive iterations, much like the Newton-Rhapson algorithm. We, add a penalty term to likelihood so we don't overfit! By increasing the regularization parameter $\lambda$, we 'increase' the minimum cost.
+We implement regularization by adding a penalty to the cost function
+
+$$
+\tag{3}
+\mathcal{J}(w,b) = -\frac{1}{m} \sum_{i=0}^n \mathcal{L}(\hat{y}, y) + \frac{\lambda}{2m}||w||^2_2 
+$$
+
+We minimize the cost function hrough successive iterations of the algorithm, much like the Newton-Rhapson algorithm. By increasing the regularization parameter $\lambda$, we 'increase' the minimum cost for the function and add more bias to the model.
 
 ```{r, echo=FALSE}
 # Create some ys
@@ -312,7 +326,7 @@ ggplot(df, aes(x=x, y=value, color=variable)) +
         legend.title = element_text(size=18))
 ```
 
-Let's see what happens when we train a bunch of models with different lambda values!
+Let's see what happens when we train a bunch of models with different lambda values.
 
 ```{r}
 ## What happens to the cost function with different values of lambda?
@@ -377,19 +391,19 @@ preds_dev <- predict_mlr(mclr3, iris_dev[,1:4])
 caret::confusionMatrix(as.factor(preds_dev$class), iris_dev[, 5])
 ```
 
-**Q. Is this a better fit? Why/why not?**
-
 ```{r}
 # Predict on test set
 preds_test <- predict_mlr(mclr3, iris_test[,1:4])
 caret::confusionMatrix(as.factor(preds_test$class), iris_test[, 5])
 ```
 
-**Q. What does this do to interpretability if the coefficients? What happened to them?**
+**Q. Is this a better fit? Why/why not?**
 
 ```{r}
 print(mclr2$models$setosa$model_information$params) # Model without lambda
 print(mclr3$models$setosa$model_information$params) # Model with lambda
 ```
+
+**Q. What does this do to interpretability if the coefficients? What happened to them?**
 
 **Q. When do you think that regularization is a good technique? In what sort of situations would you use it?**
