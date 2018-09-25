@@ -266,7 +266,7 @@ The algorithm for logistic regression tries to minimize a *cost function*. In th
 
 $$
 \tag{1}
-\mathcal{J}(w,b) = -\frac{1}{m} \sum_{i=0}^n \mathcal{L}(\hat{y}, y) 
+\mathcal{J}(w,b) = -\frac{1}{m} \sum_{i=1}^m \mathcal{L}(\hat{y}, y) 
 $$
 
 Where the log-likelihood $\mathcal{L}$ is given by
@@ -280,7 +280,7 @@ We implement regularization by adding a penalty to the cost function
 
 $$
 \tag{3}
-\mathcal{J}(w,b) = -\frac{1}{m} \sum_{i=0}^n \mathcal{L}(\hat{y}, y) + \frac{\lambda}{2m}||w||^2_2 
+\mathcal{J}(w,b) = -\frac{1}{m} \sum_{i=1}^m \mathcal{L}(\hat{y}, y) + \frac{\lambda}{2m}||w||^2_2 
 $$
 
 We minimize the cost function hrough successive iterations of the algorithm, much like the Newton-Rhapson algorithm. By increasing the regularization parameter $\lambda$, we 'increase' the minimum cost for the function and add more bias to the model.
