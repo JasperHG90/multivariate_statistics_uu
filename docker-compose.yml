@@ -84,6 +84,62 @@ services:
       - "8787"
     environment:
       - PASSWORD=stats
+  # 11
+  practical11:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 12
+  practical12:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 13
+  practical13:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 14
+  practical14:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 15
+  practical15:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 16
+  practical16:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
+  # 17
+  practical17:
+    image: jhginn/multivariate_statistics_uu
+    restart: always
+    expose:
+      - "8787"
+    environment:
+      - PASSWORD=stats
   ## Load balancer
   nginx:
     image: nginx:1.9
@@ -103,6 +159,13 @@ services:
      - practical8
      - practical9
      - jerry
+     - practical11
+     - practical12
+     - practical13
+     - practical14
+     - practical15
+     - practical16
+     - practical17
     links:
      - practical1
      - practical2
@@ -114,3 +177,10 @@ services:
      - practical8
      - practical9
      - jerry
+     - practical11
+     - practical12
+     - practical13
+     - practical14
+     - practical15
+     - practical16
+     - practical17
