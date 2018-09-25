@@ -147,9 +147,7 @@ knitr::include_graphics("img/model.png")
 knitr::include_graphics("img/classtable.png") # FROM: https://en.wikipedia.org/wiki/Sensitivity_and_specificity
 ```
 
-The outcomes should look 'likely' given the data. So a point that has the label $1$ but has a low probability of being selected as such gets penalized by the log-likelihood. As an aside, the use of the log function is a computational choice: by the rules of logarithms, products can be summed instead of multiplied when we take the log.
-
-Now we perform multi-class classification. First, think about what a 'naive' model would do given K classes? Would it:
+Now we perform multi-class classification. First, think about what a simple model would do given K classes? Would it:
 
   - guess randomly?
   - choose the class with the maximum number of subjects?
