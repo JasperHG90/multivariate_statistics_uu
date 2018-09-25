@@ -407,3 +407,72 @@ print(mclr3$models$setosa$model_information$params) # Model with lambda
 **Q. When do you think that regularization is a good technique? In what sort of situations would you use it?**
 
 **Q. Given the dimensions of this data, do you think we would achieve the above result often? In other words, is there a high chance that the train/dev/test split was representative for the data or did we draw a good result by chance?**
+
+Here's an ituition
+
+```{r}
+## Number resamples
+resamples <- 50
+
+## List for results
+samples <- vector("list", length = resamples)
+
+## train a model 50 times
+for(i in seq_along(1:resamples)) {
+  
+  ## Create an index
+  index <- runif(nrow(iris))
+  
+  ## We split the data such that approximately 70% is used for training, 15% is used for testing our trained model, and another 15% is used for testing the final model
+  train <- which(index <= 0.70)
+  dev <- which(index > 0.7 & index <= 0.85)
+  test <- which(index > 0.85)
+  
+  ## Subset data
+  iris_train <- iris[train,]
+  iris_dev <- iris[dev,]
+  iris_test <- iris[test,]
+  
+  ## Train model
+  mclr3 <- mlogistic(iris_train[,1:4], iris_train[, 5], lambda = 100, max_iterations = 500)
+  
+  ## Predict on train set
+  preds_train <- predict_mlr(mclr3, iris_train[,1:4])
+  ## Get accuracy
+  acctrain <- mnlr::accuracy(preds_train$class, iris_train[,5]) / 100
+  
+  ## Predict on dev set
+  preds_dev <- predict_mlr(mclr3, iris_dev[,1:4])
+  ## Accuracy
+  accdev <- mnlr::accuracy(preds_dev$class, iris_dev[,5]) / 100
+  
+  # Predict on test set
+  preds_test <- predict_mlr(mclr3, iris_test[,1:4])
+  ## Accuracy
+  acctest <- mnlr::accuracy(preds_test$class, iris_test[,5]) / 100
+  
+  ## Metrics
+  samples[[i]] <-
+    data.frame(
+      "accuracy_train" = acctrain,
+      "accuracy_dev" = accdev,
+      "accuracy_test" = acctest,
+      "max_difference" = abs(max(c(acctrain, accdev,acctest)) - min(c(acctrain, accdev, acctest)))
+    )
+  
+}
+
+## Bind into one data frame
+resampled <- do.call(rbind.data.frame, samples)
+
+## Reshape from wide --> long
+library(reshape2)
+resampled_long <- melt(resampled)
+library(ggplot2)
+
+ggplot(resampled_long, aes(x=value, fill=variable)) +
+  geom_density() +
+  theme_bw() +
+  facet_grid(variable ~.)
+
+```
