@@ -63,22 +63,6 @@ p <- plot_ly(iris, x = ~Sepal.Length, y = ~Petal.Length, z = ~Petal.Width,
 plotly_build(p)
 ```
 
-Another possibility is to compute the principal components of the data and to plot the first two components.
-
-```{r}
-prc <- princomp(iris[,1:4])
-prc <- prc$scores
-
-# Make a new dataset
-prcdata <- data.frame("component1" = prc[,1],
-                      "component2" = prc[,2],
-                      "species" = iris[,5])
-
-ggplot(prcdata, aes(x=component1, y=component2, color=species)) +
-  geom_point() + 
-  theme_bw() 
-```
-
 **Q. for which research question is perfect separation an issue? Is it an issue if we want to make inferences or if we want to predict?**
 
 (Hint: try to separate the algorithm from statistical theory. Which one is impacted by perfect separation of variables?)
@@ -403,6 +387,8 @@ print(mclr3$models$setosa$model_information$params) # Model with lambda
 ```
 
 **Q. What does this do to interpretability if the coefficients? What happened to them? The coefficients are assumed to be unbiased population parameters. Given the effect of the l2-regularization on the coefficients, can this still be the case?**
+
+<!-- Bayesian v. Frequentist -->
 
 **Q. When do you think that regularization is a good technique? In what sort of situations would you use it?**
 
