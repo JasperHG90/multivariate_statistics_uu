@@ -280,7 +280,7 @@ caret::confusionMatrix(as.factor(preds_dev$class), iris_dev[, 5])
 
 ### Regularization
 
-The algorithm for logistic regression tries to minimize a *cost function*
+The algorithm for logistic regression tries to minimize a *cost function*. In this case (1)
 
 $$
 \tag{1}
@@ -371,8 +371,6 @@ ggplot(result_bind_long, aes(x=iteration, y=value, color=Var2)) +
 
 **Q. What do we see on this plot? The x-axis contains the iterations of the algorithm and the y-axis is the cost function.**
 
-**Q. The coefficients are assumed to be unbiased population parameters. Given the effect of the l2-regularization on the coefficients, can this still be the case? Think of the bias/variance trade-off and how you would test for this. Would confidence intervals help?**
-
 We train a new model with a high lambda value and see if this creates a better fit on the data
 
 ```{r}
@@ -404,6 +402,8 @@ print(mclr2$models$setosa$model_information$params) # Model without lambda
 print(mclr3$models$setosa$model_information$params) # Model with lambda
 ```
 
-**Q. What does this do to interpretability if the coefficients? What happened to them?**
+**Q. What does this do to interpretability if the coefficients? What happened to them? The coefficients are assumed to be unbiased population parameters. Given the effect of the l2-regularization on the coefficients, can this still be the case?**
 
 **Q. When do you think that regularization is a good technique? In what sort of situations would you use it?**
+
+**Q. Given the dimensions of this data, do you think we would achieve the above result often? In other words, is there a high chance that the train/dev/test split was representative for the data or did we draw a good result by chance?**
